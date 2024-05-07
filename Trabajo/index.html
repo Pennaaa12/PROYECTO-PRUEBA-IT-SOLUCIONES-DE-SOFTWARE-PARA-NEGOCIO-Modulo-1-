@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shoes Store</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2><i class="fas fa-shoe-prints"></i> Shoes Store</h2>
+      <ul>
+        <li><a href="#"><i class="fas fa-chart-line"></i><span>Dashboard</span></a></li>
+        <li><a href="#" id="btnShowUserManagement"><i class="fas fa-users"></i><span>Clientes</span></a></li>
+        <li><a href="#"><i class="fas fa-shopping-bag"></i><span>Productos</span></a></li>
+        <li><a href="#"><i class="fas fa-dollar-sign"></i><span>Ventas</span></a></li>
+      </ul>
+    </div>
+
+    <div class="content">
+      <h2>Clientes</h2>
+      <div id="userManagement" style="display: none;">
+        <!-- Contenido de la gestión de clientes -->
+        <div class="user-actions">
+          <button id="btnAddUser" class="btn btn-primary"><i class="fas fa-user-plus"></i> Agregar Cliente</button>
+          <div class="filter-options">
+            <label for="txtFilterName" class="filter-label">Filtrar por Nombre:</label>
+            <input type="text" id="txtFilterName" class="form-control" placeholder="Nombre">
+            <label for="txtFilterCity" class="filter-label">Filtrar por Ciudad:</label>
+            <input type="text" id="txtFilterCity" class="form-control" placeholder="Ciudad">
+            <label for="selectFilterState" class="filter-label">Filtrar por Estado:</label>
+            <select id="selectFilterState" class="form-control">
+              <option value="">Seleccionar Estado</option>
+              <option value="activo">Activo</option>
+              <option value="inactivo">Inactivo</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-container">
+          <table id="userTable">
+            <thead>
+              <tr>
+                <th>ID Cliente</th>
+                <th>Tipo de Identificación</th>
+                <th>Identificación</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Ciudad</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Aquí se insertarán las filas de la tabla dinámicamente -->
+              <tr>
+                <td>001</td>
+                <td>CC</td>
+                <td>12345678</td>
+                <td>Juan</td>
+                <td>Pérez</td>
+                <td>555-123-456</td>
+                <td>Calle Principal 123</td>
+                <td>Buenos Aires</td>
+                <td>Activo</td>
+                <td class="actions">
+                  <button class="edit" onclick="editUser('Juan')">Editar</button>
+                  <button class="delete" onclick="confirmDeleteUser('Juan')">Eliminar</button>
+                  <button class="toggle-status" onclick="toggleUserStatus('Juan')">Desactivar</button>
+                </td>
+              </tr>
+              <tr>
+                <td>002</td>
+                <td>TI</td>
+                <td>87654321</td>
+                <td>María</td>
+                <td>García</td>
+                <td>555-987-654</td>
+                <td>Avenida Central 456</td>
+                <td>Madrid</td>
+                <td>Activo</td>
+                <td class="actions">
+                  <button class="edit" onclick="editUser('María')">Editar</button>
+                  <button class="delete" onclick="confirmDeleteUser('María')">Eliminar</button>
+                  <button class="toggle-status" onclick="toggleUserStatus('María')">Desactivar</button>
+                </td>
+              </tr>
+              <tr>
+                <td>003</td>
+                <td>CC</td>
+                <td>54321678</td>
+                <td>Luis</td>
+                <td>Martínez</td>
+                <td>555-789-012</td>
+                <td>Plaza Mayor 789</td>
+                <td>Barcelona</td>
+                <td>Inactivo</td>
+                <td class="actions">
+                  <button class="edit" onclick="editUser('Luis')">Editar</button>
+                  <button class="delete" onclick="confirmDeleteUser('Luis')">Eliminar</button>
+                  <button class="toggle-status" onclick="toggleUserStatus('Luis')">Activar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
