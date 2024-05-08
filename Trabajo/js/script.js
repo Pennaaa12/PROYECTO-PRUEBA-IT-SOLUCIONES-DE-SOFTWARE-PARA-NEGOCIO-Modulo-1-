@@ -37,16 +37,25 @@ function showAlert(message) {
   alert(message);
 }
 
-// Función para agregar un nuevo usuario
-function addUserForm() {
+ // Función para agregar un nuevo usuario
+ function addUserForm() {
+  console.log('Agregando nuevo usuario...');
   const id = prompt('Ingrese el ID del cliente:');
+  console.log('ID del cliente:', id);
   const identificationType = prompt('Ingrese el tipo de identificación:');
+  console.log('Tipo de identificación:', identificationType);
   const identificationNumber = prompt('Ingrese el número de identificación:');
+  console.log('Número de identificación:', identificationNumber);
   const name = prompt('Ingrese el nombre del cliente:');
+  console.log('Nombre del cliente:', name);
   const lastName = prompt('Ingrese el apellido del cliente:');
+  console.log('Apellido del cliente:', lastName);
   const phone = prompt('Ingrese el teléfono del cliente:');
+  console.log('Teléfono del cliente:', phone);
   const address = prompt('Ingrese la dirección del cliente:');
+  console.log('Dirección del cliente:', address);
   const city = prompt('Ingrese la ciudad del cliente:');
+  console.log('Ciudad del cliente:', city);
   if (id && identificationType && identificationNumber && name && lastName && phone && address && city) {
     addUser(id, identificationType, identificationNumber, name, lastName, phone, address, city, 'activo'); // Por defecto, el nuevo usuario se agrega como activo
     renderUserTable();
@@ -101,9 +110,9 @@ function toggleUserStatus(id) {
 }
 
 // Inicializar la tabla con algunos usuarios de ejemplo
-addUser('001', 'DNI', '12345678', 'Juan', 'Pérez', '555-123-456', 'Calle Principal 123', 'Buenos Aires', 'activo');
-addUser('002', 'CUIL', '87654321', 'María', 'García', '555-987-654', 'Avenida Central 456', 'Madrid', 'activo');
-addUser('003', 'RUC', '54321678', 'Luis', 'Martínez', '555-789-012', 'Plaza Mayor 789', 'Barcelona', 'inactivo');
+addUser('01', 'DNI', '12345678', 'Juan', 'Pérez', '555-123-456', 'Calle Principal 123', 'Buenos Aires', 'activo');
+addUser('02', 'CUIL', '87654321', 'María', 'García', '555-987-654', 'Avenida Central 456', 'Madrid', 'activo');
+addUser('03', 'RUC', '54321678', 'Luis', 'Martínez', '555-789-012', 'Plaza Mayor 789', 'Barcelona', 'inactivo');
 renderUserTable();
 
 // Mostrar u ocultar la gestión de clientes al hacer clic en el botón
@@ -114,4 +123,20 @@ document.getElementById('btnShowUserManagement').addEventListener('click', funct
   } else {
     userManagement.style.display = 'none';
   }
+});
+
+document.getElementById('btnAddUser').addEventListener('click', function() {
+  var formContainer = document.getElementById('addUserFormContainer');
+  if (formContainer.style.display === 'none' || formContainer.style.display === '') {
+    formContainer.style.display = 'block';
+  } else {
+    formContainer.style.display = 'none';
+  }
+});
+
+document.getElementById('addUserForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Evitar que el formulario se envíe de forma convencional
+  // Aquí puedes agregar la lógica para manejar el envío del formulario
+  // Por ejemplo, obtener los valores de los campos del formulario y agregar el nuevo cliente
+  // Luego puedes restablecer el formulario o cerrar el contenedor del formulario
 });

@@ -1,3 +1,4 @@
+/* Estilos para la página */
 body {
   font-weight: bold; /* Cambiar todo el tipo de letra a negrita */
 }
@@ -111,6 +112,7 @@ body {
 .actions button:hover {
   opacity: 0.8;
 }
+
 /* Estilos para los botones del menú lateral */
 .sidebar ul li a {
   display: flex;

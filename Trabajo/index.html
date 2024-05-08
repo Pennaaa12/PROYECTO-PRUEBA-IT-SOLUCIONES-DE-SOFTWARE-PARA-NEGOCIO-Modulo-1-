@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shoes Store</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../Trabajo/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
@@ -111,6 +111,29 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <div id="addUserFormContainer" style="display: none;">
+    <h2>Agregar Nuevo Cliente</h2>
+    <form id="addUserForm">
+      <label for="identificationType">Tipo de Identificación:</label><br>
+      <input type="text" id="identificationType" name="identificationType"><br><br>
+      <label for="identificationNumber">Número de Identificación:</label><br>
+      <input type="text" id="identificationNumber" name="identificationNumber"><br><br>
+      <label for="name">Nombre:</label><br>
+      <input type="text" id="name" name="name"><br><br>
+      <label for="lastName">Apellidos:</label><br>
+      <input type="text" id="lastName" name="lastName"><br><br>
+      <label for="phone">Teléfono:</label><br>
+      <input type="text" id="phone" name="phone"><br><br>
+      <label for="address">Dirección:</label><br>
+      <input type="text" id="address" name="address"><br><br>
+      <label for="city">Ciudad:</label><br>
+      <input type="text" id="city" name="city"><br><br>
+      <label for="state">Estado:</label><br>
+      <input type="text" id="state" name="state"><br><br>
+      <button type="submit">Enviar Registro</button>
+    </form>
+  </div>
+
+  <script src="../Trabajo/js/script.js"></script>
 </body>
 </html>
