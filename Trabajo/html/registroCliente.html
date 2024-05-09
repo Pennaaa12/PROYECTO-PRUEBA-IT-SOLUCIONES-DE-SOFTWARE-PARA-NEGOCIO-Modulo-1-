@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Registro Producto</title>
+    <script src="../js/producto.js"></script>
+</head>
+
+<body style="padding-top: 3%; background-color:rgb(251, 251, 251);">
+    <div class="container-sm" style="background-color:rgba(255, 255, 255, 0.695); border-radius: 40px;">
+        <div class="container" style="padding: 7%; color:rgb(0, 0, 0);">
+            <h1 style="padding-top: 5%;"><b>Registrar Producto</b></h1>
+            <form onsubmit="return validarFormulario()">
+                <div class="row">
+                    <div class="col col-xl-6 col-12" style="padding-top: 2%;">
+                        <label for="nombre_produc">Nombre producto:</label>
+                        <input type="text" id="nombre_produc" class="form-control" onfocusout="validarNombre(this);">
+                    </div>
+                    <div class="col col-xl-6 col-12" style="padding-top: 2%;">
+                        <label for="descripcion">Descripcion:</label>
+                        <input type="text" id="descripcion" class="form-control" onfocusout="validarDescripcion(this);">
+                    </div>
+                    <div class="col col-xl-6 col-12" style="padding-top: 2%;">
+                        <label for="cantidad">Cantidad:</label>
+                        <input type="text" id="cantidad" class="form-control" onfocusout="validarCantidad(this);">
+                    </div>
+                    <div class="col col-xl-6 col-12" style="padding-top: 2%;">
+                        <label for="precio">Precio:</label>
+                        <input type="text" id="precio" class="form-control" onfocusout="validarPrecio(this);">
+                    </div>
+                    <div class="col col-xl-6 col-12" style="padding-top: 2%;">
+                        <label for="iva">%IVA</label>
+                        <input type="text" id="iva" class="form-control" onfocusout="validarIva(this);">
+                    </div>
+                    <div class="col col-xl-6 col-12" style="padding-top: 2%;">
+                        <label for="descuento">%Descuento</label>
+                        <input type="text" id="descuento" class="form-control" onfocusout="validarDescuento(this);">
+                    </div>
+                    <div class="col col-xl-6 col-12" style="padding-top: 2%;">
+                        <label for="estado_produc">Estado</label>
+                        <select id="estado_produc" class="form-select">
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="buttom" style="padding-top: 3%;">
+                    <button type="submit" class="btn btn-primary btn-lg">Registrar Producto</button>
+                    <button type="button" class="btn btn-secondary" onclick="limpiar();">Limpiar</button>
+                    <button type="button" class="btn btn-primary" onclick="redirectToCrudCliente();">Volver al CRUD de Clientes</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function validarFormulario() {
+            Swal.fire({
+                title: "¡Éxito!",
+                text: "El producto se registró exitosamente.",
+                icon: "success"
+            });
+            return false; // Para evitar que se envíe el formulario
+        }
+
+        function redirectToCrudCliente() {
+            window.location.href = "crud_cliente.html";
+        }
+    </script>
+</body>
+
+</html>

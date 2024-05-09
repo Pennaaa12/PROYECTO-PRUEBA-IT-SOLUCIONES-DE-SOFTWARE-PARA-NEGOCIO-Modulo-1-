@@ -1,146 +1,318 @@
-// Lista de productos
-let products = [];
+var url = "http://localhost:8080/api/shoes/producto/";
 
-// Función para agregar producto a la lista
-function addProduct(id, productName, productDescription, productQuantity, productPrice, productIVA, productDiscount, productState) {
-  products.push({ id, productName, productDescription, productQuantity, productPrice, productIVA, productDiscount, productState });
+function listarCliente() {
+    //METODO PARA LISTAR LOS CLIENTES
+
+    // cual es la diferencia entre busqueda normal
+    // y con FileSystemDirectoryHandle
+    // normal url= http://localhost:8080/api/hospital/medico/
+    // con filtro url= http://localhost:8080/api/hospital/medico/busqueda/parametro
+
+    // si el campo filtro es diferente a vacio haga busqueda con filtro
+
+    // si no haga busqueda normal
+
+    var urlLocal = url;
+    var filtro = document.getElementById("texto").value
+    if (filtro != "")
+        urlLocal += "busqueda/" + filtro;
+
+
+    //SE CREA LA PETICION AJAX
+    $.ajax({
+        url: urlLocal,
+        type: "GET",
+        success: function (result) {
+            //success: funcion que se ejecuta
+            //cuando la peticion tiene exito
+            //console.log(result);
+
+            var cuerpoTablaProducto = document.getElementById("cuerpoTablaProducto");
+            //Se limpia el cuepro de la tabla
+            cuerpoTablaProducto.innerHTML = "";
+            //se hace un ciclo que recorra l arreglo con los datos
+            for (var i = 0; i < result.length; i++) {
+                //UNA ETIQUETA tr por cada registro
+                var trResgistro = document.createElement("tr");
+
+                var celdaId = document.createElement("tr");
+                let celdaNombre = document.createElement("td")
+                let celdanDescripcion = document.createElement("td")
+                let celdaCantidad = document.createElement("td")
+                let celdaPrecio = document.createElement("td")
+                let celdaIva = document.createElement("td")
+                let celdaDescuento = document.createElement("td")
+                let celdaEstado = document.createElement("td")
+
+
+
+                celdaId.innerText = result[i]["id_produc"];
+                celdaNombre.innerText = result[i]["nombre"];
+                celdanDescripcion.innerText = result[i]["descripcion"];
+                celdaCantidad.innerText = result[i]["cantidad"];
+                celdaPrecio.innerText = result[i]["precio"];
+                celdaIva.innerText = result[i]["iva"];
+                celdaDescuento.innerText = result[i]["descuento"];
+                celdaEstado.innerText = result[i]["estado_produc"];
+
+
+                trResgistro.appendChild(celdaId);
+                trResgistro.appendChild(celdaNombre);
+                trResgistro.appendChild(celdanDescripcion);
+                trResgistro.appendChild(celdaCantidad);
+                trResgistro.appendChild(celdaPrecio);
+                trResgistro.appendChild(celdaIva);
+                trResgistro.appendChild(celdaDescuento);
+                trResgistro.appendChild(celdaEstado);
+
+                //botones editar y deshabilitar
+                let celdaOpcion = document.createElement("td");
+                let botonEditarProducto = document.createElement("button");
+                botonEditarProducto.value = result[i]["id_produc"];
+                botonEditarProducto.innerHTML = "Editar";
+
+                botonEditarProducto.onclick = function (e) {
+                    $('#exampleModal').modal('show');
+                    consultarProductoID(this.value);
+                }
+                botonEditarProducto.className = "btn btn-warning editar-producto";
+
+                let botonDeshabilitarProducto = document.createElement("button");
+                botonDeshabilitarProducto.innerHTML = "Deshabilitar";
+                botonDeshabilitarProducto.className = "btn btn-danger deshabilitar-producto";
+
+                let productoIdParaDeshabilitar = result[i]["id_cliente"];
+                botonDeshabilitarProducto.onclick = function () {
+                    deshabilitarCliente(productoIdParaDeshabilitar);
+                };
+
+
+                celdaOpcion.appendChild(botonEditarProducto);
+                celdaOpcion.appendChild(botonDeshabilitarProducto);
+
+                trResgistro.appendChild(celdaOpcion)
+                cuerpoTablaProducto.appendChild(trResgistro);
+
+
+                //creamos un td por cada campo de resgistro
+
+            }
+        },
+        error: function (error) {
+            /*
+            ERROR: funcion que se ejecuta cuando la peticion tiene un error
+            */
+            alert("Error en la petición " + error);
+        }
+    })
 }
 
-// Función para renderizar la tabla de productos
-function renderProductTable() {
-  const tableBody = document.querySelector('#productTable tbody');
-  tableBody.innerHTML = '';
-  products.forEach(product => {
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-      <td>${product.id}</td>
-      <td>${product.productName}</td>
-      <td>${product.productDescription}</td>
-      <td>${product.productQuantity}</td>
-      <td>${product.productPrice}</td>
-      <td>${product.productIVA}</td>
-      <td>${product.productDiscount}</td>
-      <td>${product.productState}</td>
-      <td class="actions">
-        <button class="edit" onclick="editProduct('${product.id}')">Editar</button>
-        <button class="delete" onclick="confirmDeleteProduct('${product.id}')">Eliminar</button>
-        <button class="toggle-status" onclick="toggleProductStatus('${product.id}')">${product.productState === 'activo' ? 'Desactivar' : 'Activar'}</button>
-      </td>
-    `;
-    tableBody.appendChild(newRow);
-  });
-}
 
-// Función para mostrar una alerta
-function showAlert(message) {
-  alert(message);
+//1.Crear petición que traiga la información del medico por id
+function consultarProductoID(id) {
+    //alert(id);
+    $.ajax({
+        url: url + id,
+        type: "GET",
+        success: function (result) {
+            document.getElementById("nombre_produc").value = result["tipo_id"];
+            document.getElementById("id_produc").value = result["id_cliente"];
+            document.getElementById("descripcion").value = result["doc_cliente"];
+            document.getElementById("cantidad").value = result["nombre_cliente"];
+            document.getElementById("precio").value = result["apellido_cliente"];
+            document.getElementById("iva").value = result["telefono_cliente"];
+            document.getElementById("descuento").value = result["direccion_cliente"];
+            document.getElementById("estado_produc").value = result["estado_produc"];
+        }
+    });
 }
+//2.Crear petición que actualice la información del medico
 
-// Función para agregar un nuevo producto
-function addProductForm() {
-  console.log('Agregando nuevo producto...');
-  const id = prompt('Ingrese el ID del producto:');
-  console.log('ID del producto:', id);
-  const productName = prompt('Ingrese el nombre del producto:');
-  console.log('Nombre del producto:', productName);
-  const productDescription = prompt('Ingrese la descripción del producto:');
-  console.log('Descripción del producto:', productDescription);
-  const productQuantity = prompt('Ingrese la cantidad del producto:');
-  console.log('Cantidad del producto:', productQuantity);
-  const productPrice = prompt('Ingrese el precio del producto:');
-  console.log('Precio del producto:', productPrice);
-  const productIVA = prompt('Ingrese el IVA del producto:');
-  console.log('IVA del producto:', productIVA);
-  const productDiscount = prompt('Ingrese el descuento del producto:');
-  console.log('Descuento del producto:', productDiscount);
-  const productState = prompt('Ingrese el estado del producto:');
-  console.log('Estado del producto:', productState);
-  if (id && productName && productDescription && productQuantity && productPrice && productIVA && productDiscount && productState) {
-    addProduct(id, productName, productDescription, productQuantity, productPrice, productIVA, productDiscount, productState); // Por defecto, el nuevo producto se agrega como activo
-    renderProductTable();
-    showAlert('Producto agregado correctamente');
-  }
-}
+function actualizarProducto() {
+    var id_produc = document.getElementById("id_produc").value
+    let formData = {
+        "nombre_produc": document.getElementById("nombre_produc").value,
+        "descripcion": document.getElementById("descripcion").value,
+        "cantidad": document.getElementById("cantidad").value,
+        "precio": document.getElementById("precio").value,
+        "iva": document.getElementById("iva").value,
+        "descuento": document.getElementById("descuento").value,
+        "estado_produc": document.getElementById("estado_produc").value
+    };
 
-// Función para editar un producto
-function editProduct(id) {
-  const product = products.find(p => p.id === id);
-  if (product) {
-    const newProductName = prompt('Editar nombre del producto:', product.productName);
-    const newProductDescription = prompt('Editar descripción del producto:', product.productDescription);
-    const newProductQuantity = prompt('Editar cantidad del producto:', product.productQuantity);
-    const newProductPrice = prompt('Editar precio del producto:', product.productPrice);
-    const newProductIVA = prompt('Editar IVA del producto:', product.productIVA);
-    const newProductDiscount = prompt('Editar descuento del producto:', product.productDiscount);
-    const newProductState = prompt('Editar estado del producto:', product.productState);
-    if (newProductName && newProductDescription && newProductQuantity && newProductPrice && newProductIVA && newProductDiscount && newProductState) {
-      product.productName = newProductName;
-      product.productDescription = newProductDescription;
-      product.productQuantity = newProductQuantity;
-      product.productPrice = newProductPrice;
-      product.productIVA = newProductIVA;
-      product.productDiscount = newProductDiscount;
-      product.productState = newProductState;
-      renderProductTable();
-      showAlert('Producto actualizado correctamente');
+    if (validarCampos()) {
+        $.ajax({
+            url: url + id_cliente,
+            type: "PUT",
+            data: formData,
+            success: function (result) {
+                // Manejar la respuesta exitosa según necesites
+                Swal.fire({
+                    title: "¡Excelente!",
+                    text: "Se guardó correctamente",
+                    icon: "success"
+                });
+                // Puedes hacer algo adicional como recargar la lista de médicos
+                listarProducto();
+            },
+            error: function (error) {
+                // Manejar el error de la petición
+                Swal.fire({
+                    title: "¡Error!",
+                    text: "No se guardó",
+                    icon: "error"
+                });
+            }
+        });
+    } else {
+        Swal.fire({
+            title: "¡Error!",
+            text: "Llene todos los campos correctamente",
+            icon: "error"
+        });
     }
-  }
 }
 
-// Función para confirmar la eliminación de un producto
-function confirmDeleteProduct(id) {
-  const confirmDelete = confirm('¿Está seguro de eliminar este producto?');
-  if (confirmDelete) {
-    deleteProduct(id);
-  }
+
+// funcion de deshabilitar medico
+function deshabilitarProducto(id) {
+    Swal.fire({
+        title: '¿Está seguro?',
+        text: "Esta acción no se puede deshacer",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, deshabilitar!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: url + id,
+                type: "DELETE",
+                success: function (result) {
+                    Swal.fire(
+                        'Deshabilitado!',
+                        'El registro ha sido deshabilitado.',
+                        'success'
+                    );
+                    listarProducto(); // Recarga la lista de médicos
+                },
+                error: function (error) {
+                    Swal.fire(
+                        'Error!',
+                        'No se pudo deshabilitar el registro.',
+                        'error'
+                    );
+                }
+            });
+        }
+    });
 }
 
-// Función para eliminar un producto
-function deleteProduct(id) {
-  products = products.filter(product => product.id !== id);
-  renderProductTable();
-  showAlert('Producto eliminado correctamente');
+
+function registrarProducto() {
+
+    let formData = {
+        "nombre_produc": document.getElementById("nombre_produc").value,
+        "descripcion": document.getElementById("descripcion").value,
+        "cantidad": document.getElementById("cantidad").value,
+        "precio": document.getElementById("precio").value,
+        "iva": document.getElementById("iva").value,
+        "descuento": document.getElementById("descuento").value,
+        "estado_produc": document.getElementById("estado_produc").value
+
+    };
+
+    if (validarCampos()) {
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: formData,
+            success: function (result) {
+                //
+                Swal.fire({
+                    title: "¡Excelente!",
+                    text: "Se guardó correctamente",
+                    icon: "success"
+                });
+            },
+        })
+    } else {
+        Swal.fire({
+            title: "¡Error!",
+            text: "Llene todos los campos correctamente",
+            icon: "error"
+        });
+    }
 }
 
-// Función para activar o desactivar un producto
-function toggleProductStatus(id) {
-  const product = products.find(p => p.id === id);
-  if (product) {
-    product.productState = product.productState === 'activo' ? 'inactivo' : 'activo';
-    renderProductTable();
-    showAlert(`Producto ${product.productState === 'activo' ? 'activado' : 'desactivado'} correctamente`);
-  }
+function validarCampos() {
+   
+    var nombre = document.getElementById("nombre_produc");
+
+    validarNombre(nombre) && 
+    validarDescripcion(descripcion) &&
+    validarIva(iva) &&
+    validarDescuento(descuento);
+    
+
+
 }
 
-// Inicializar la tabla con algunos productos de ejemplo
-addProduct('001', 'Producto 1', 'Descripción 1', '15', '100.00', '10%', '5%', 'activo');
-addProduct('002', 'Producto 2', 'Descripción 2', '12', '200.00', '15%', '8%', 'inactivo');
-addProduct('003', 'Producto 3', 'Descripción 3', '20', '300.00', '20%', '3%', 'activo');
-addProduct('004', 'Producto 4', 'Descripción 4', '25', '400.00', '25%', '5%', 'activo');
-renderProductTable();
+function validarNombre(cuadroNombre) {
+    var valor = cuadroNombre.value;
+    var valido = true;
+    if (valor.length < 3 || valor.length > 21) {
+        valido = false
+    }
 
-// Mostrar u ocultar la gestión de productos al hacer clic en el botón
-document.getElementById('btnShowProductManagement').addEventListener('click', function() {
-  var productManagement = document.getElementById('productManagement');
-  if (productManagement.style.display === 'none') {
-    productManagement.style.display = 'block';
-  } else {
-    productManagement.style.display = 'none';
-  }
-});
+    if (valido) {
+        cuadroNombre.className = "form-control is-valid";
+    } else {
+        cuadroNombre.className = "form-control is-invalid";
+    }
+    return valido;
+}
 
-document.getElementById('btnAddProduct').addEventListener('click', function() {
-  var formContainer = document.getElementById('addProductFormContainer');
-  if (formContainer.style.display === 'none' || formContainer.style.display === '') {
-    formContainer.style.display = 'block';
-  } else {
-    formContainer.style.display = 'none';
-  }
-});
+function validarCantidad(cuadroCantidad) {
+    var valor = cuadroCantidad.value;
+    var valido = true;
+    if (valor.length < 2 || valor.length > 21) {
+        valido = false
+    }
 
-document.getElementById('addProductForm').addEventListener('submit', function(event) {
-  event.preventDefault(); // Evitar que el formulario se envíe de forma convencional
-  // Aquí puedes agregar la lógica para manejar el envío del formulario
-  // Por ejemplo, obtener los valores de los campos del formulario y agregar el nuevo producto
-  // Luego puedes restablecer el formulario o cerrar el contenedor del formulario
-});
+    if (valido) {
+        cuadroCantidad.className = "form-control is-valid";
+    } else {
+        cuadroCantidad.className = "form-control is-invalid";
+    }
+    return valido;
+}
+
+function validarPrecio(cuadroPrecio) {
+    var valor = cuadroPrecio.value;
+    var valido = true;
+    if (valor.length < 7 || valor.length > 16) {
+        valido = false
+    }
+
+    if (valido) {
+        cuadroPrecio.className = "form-control is-valid";
+    } else {
+        cuadroPrecio.className = "form-control is-invalid";
+    }
+    return valido;
+}
+
+function limpiar() {
+    document.getElementById("nombre_produc").value = "";
+    document.getElementById("descripcion").value = "";
+    document.getElementById("cantidad").value = "";
+    document.getElementById("precio").value = "";
+    document.getElementById("iva").value = "";
+    document.getElementById("descuento").value = "";
+    document.getElementById("estado_produc").value = "";
+
+}
+
+

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shoe Store</title>
+    <link href="/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* Para que la imagen ocupe todo el espacio visible */
+        }
+
+        .menu {
+            width: 220px; /* Ancho del menú lateral */
+            height: 100%;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto; /* Permite desplazamiento vertical si el contenido es más largo que el menú */
+            padding-top: 20px;
+            z-index: 1; /* Para que esté por encima de la imagen */
+        }
+
+        .menu img {
+            display: block;
+            margin: 0 auto;
+            width: 60%; /* Ancho del logo (modificado para agrandar) */
+            border-radius: 20px; /* Forma del logo (modificado) */
+        }
+
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu ul li {
+            padding: 10px;
+        }
+
+        .menu ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .menu ul li a:hover {
+            background-color: #555;
+        }
+
+        .menu ul li a.btn {
+            border-radius: 50px; /* Forma redonda */
+            padding: 10px 20px; /* Espaciado interno */
+        }
+
+        #img {
+            height: 100%; /* Ajusta la altura de la imagen para que cubra toda la pantalla */
+            background-image: url("../img/12.jpg");
+            background-size: cover; /* Ajusta el tamaño de la imagen para cubrir completamente el contenedor */
+            background-position: center; /* Centra la imagen en el contenedor */
+            z-index: 0; /* Para que esté detrás del menú */
+        }
+
+        .contenido {
+            margin-left: 220px; /* Alinea el contenido a la derecha del menú */
+            height: 100%; /* Ajusta la altura para que ocupe todo el espacio */
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+  <div class="contenido">
+    <div id="img"></div>
+
+    <div class="menu">
+        <div class="container-fluid">
+            <br>
+            <img src="../img/nikee.jpg" alt="" width="60%">
+            <br>
+        </div>
+        <ul>
+            <br>
+            <li><a href="../html/crudProducto.html" class="btn">Productos</a></li>
+            <br>
+            <li><a href="../html/crudCliente.html" class="btn">Clientes</a></li>
+            <br>
+            <li><a href="#" class="btn">Ventas</a></li>
+            <br>
+            <li><a href="#" class="btn">Dashboard</a></li>
+            <br>
+        </ul>
+    </div>
+  </div>
+</body>
+</html>

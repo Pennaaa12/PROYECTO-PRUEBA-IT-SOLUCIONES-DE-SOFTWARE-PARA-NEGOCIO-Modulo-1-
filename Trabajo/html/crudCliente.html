@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD CLIENTE</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body onload="listarCliente();">
+   
+        <div class="container-xxl" style="padding:6%;">
+            <div class="col-md-12">
+                <div class="table tittle">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1 style="padding-right: 50%;"><b>Clientes Registrados</b></h1>
+                        </div>
+                        <div class="col-sm-6" style="padding-left:40%;">
+                            <a href="../html/registroCliente.html" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i><h6>Registrar nuevo Cliente</h6></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="text" id="texto" class="form-control" placeholder="Buscar..."
+                        aria-label="Buscar" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2"
+                            onclick="listarCliente();">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <table id="table table-striped table-hover" class="table" style="background-color: rgba(68, 68, 68, 0.515); border: rgb(161, 161, 161) 2px solid;">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <td><b>Id</b></td>
+                            <td><b>Tipo de Identificacion</b></td>
+                            <td><b>Documento de Identidad</b></td>
+                            <td><b>Nombre del Cliente</b></td>
+                            <td><b>Apellido del Cliente</b></td>
+                            <td><b>Numero de Telefono</b></td>
+                            <td><b>Direccion</b></td>
+                            <td><b>Ciudad</b></td>
+                            <td><b>Estado</b></td>
+                            <td colspan="2"><b>Acciones</b></td>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTablaCliente" style="background-color: rgb(255, 255, 255); text-align: center;">
+                    
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+    
+    <!-- Modal Editar -->
+<div class="modal fade" id="exampleModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" style="border-radius: 20px; padding: 4%; background-color:rgb(255, 255, 255);">
+        <div class="modal-body">
+                <h1 style="padding-top: 5%;"><b>Actualizar datos cliente</b></h1>
+            <div style="padding: 3%; color:rgb(0, 0, 0);">
+            <div class="row">
+                <div class="col col-xl-6 col-12" style="padding-top: 2%;">
+                    <label for="">Tipo de Identificacion</label>
+                    <input type="text" id="tipo_id" class="form-control" onfocusout="validarTipoId(this);">
+                </div>
+                <div class="col col-xl-6 col-12" style="padding-top:2%;">
+                    <label for="">Numero de Identificacion</label>
+
+                       <!--para que no acepte decimal se utiliza step-->
+                    <input type="hidden" id="id_cliente"  step="1" >
+                    <input type="number" id="doc_cliente" class="form-control" onfocusout="validarNumeroIdentificacion(this);">
+                </div>
+                <div class="col col-xl-6 col-12" style="padding-top:2%;">
+                    <label for="">Nombre del Cliente</label>
+                    <input type="text" id="nombre_cliente" class="form-control" onfocusout="validarNombreCliente(this);">
+                </div>
+                <div class="col col-xl-6 col-12" style="padding-top:2%;">
+                    <label for="">Apellido del Cliente</label>
+                    <input type="text" id="apellido_cliente" class="form-control" onfocusout="validarApellidoCliente(this);">
+                </div>
+                <div class="col col-xl-6 col-12" style="padding-top:2%;">
+                    <label for="">Numero de Telefono</label>
+                    <input type="number" id="telefono_cliente" class="form-control" onfocusout="validarTelefonoCliente(this);">
+                </div>
+                <div class="col col-xl-6 col-12" style="padding-top:2%;">
+                    <label for="">Direccion</label>
+                    <input type="text" id="direccion_cliente" class="form-control" onfocusout="validarDireccionCliente(this);">
+                </div>
+                <div class="col col-xl-6 col-12" style="padding-top:2%;">
+                    <label for="">Ciudad</label>
+                    <input type="text" id="ciudad_cliente" class="form-control" onfocusout="validarCiudadCliente(this);">
+                </div>
+                <div class="col col-xl-6 col-12" style="padding-top:2%;">
+                    <label for="" id="estado">Estado</label>
+                    <select name=""  id="estado_cliente" class="form-select">
+                        <option value="" selected disabled></option>
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                    </select>
+                </div>
+                <div style="padding-top: 3%;">
+                    <button type="button" class="btn btn-success" onclick="actualizarCliente();">Actualizar</button>
+                </div>
+            </div>
+      </div>
+    </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../js/cliente.js"></script>
+</body>
+</html>
